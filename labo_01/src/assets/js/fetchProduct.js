@@ -55,11 +55,11 @@ async function loadProducts() {
 
                 <div class="product-info">
 
-                    <h3 class="product-title">${product.title}</h3>
+                    <h3 class="product-title">${product.name}</h3>
 
                     <p>${product.description}</p>
 
-                    <p class="product-price">$${product.price}</p>
+                    <p class="product-price">$${product.price.toFixed(2)}</p>
 
                     <a href="#" class="btn">Add to Cart</a>
 
