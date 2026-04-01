@@ -5,12 +5,20 @@ const loadSnacksBtn = document.querySelector('#load-snacks-btn');
 const snacksContainer = document.querySelector('#snacks-container');
 const feedback = document.querySelector('#feedback');
 
-// TODO task004: ajouter les références DOM nécessaires pour les points de vente
-// TODO task004: prévoir une variable d'état pour éviter de recharger inutilement les données
+// Références pour les points de vente
+const toggleSalesBtn = document.querySelector('#toggle-sales-btn');
+const salesSection = document.querySelector('#sales-section');
+const salesContainer = document.querySelector('#sales-container');
+const salesFeedback = document.querySelector('#sales-feedback');
+
+// Variable d'état pour ne pas recharger les données à chaque clic
+let salesLoaded = false;
+let salesVisible = false;
 
 loadSnacksBtn.addEventListener('click', loadSnacks);
-// TODO task004: brancher ici l'événement du bouton des points de vente
+toggleSalesBtn.addEventListener('click', toggleSalesPoints);
 
+// Charger les snacks
 async function loadSnacks() {
   feedback.textContent = '';
 
@@ -23,22 +31,61 @@ async function loadSnacks() {
   }
 }
 
+// Afficher les snacks
 function displaySnacks(snacks) {
   snacksContainer.innerHTML = snacks.map((snack) => `
     <article class="card">
       <img src="${snack.imageUrl}" alt="${snack.alt}">
       <div class="card-content">
-        <h3>${snack.name}</h3>
+        <h3>${snack.name.toUpperCase()}</h3>
         <p>${snack.description}</p>
-        <p class="price">$ ${snack.price.toFixed(2)}</p>
-        <span class="fake-action">Add to cart</span>
+        <p class="price">CHF ${snack.price.toFixed(2)}</p>
+        <span class="fake-action">Commander</span>
       </div>
     </article>
   `).join('');
-
-  // TODO task002: adapter le rendu selon le cahier des charges
 }
 
-// TODO task003: créer une fonction loadSalesPoints
-// TODO task003: créer une fonction displaySalesPoints
-// TODO task005: afficher un message lisible si le chargement échoue
+// Afficher ou masquer les points de vente
+async function toggleSalesPoints() {
+  // Charger les données seulement la première fois
+  if (!salesLoaded) {
+    await loadSalesPoints();
+  }
+
+  salesVisible = !salesVisible;
+
+  if (salesVisible) {
+    salesSection.classList.remove('hidden');
+    toggleSalesBtn.textContent = 'Masquer les points de vente';
+  } else {
+    salesSection.classList.add('hidden');
+    toggleSalesBtn.textContent = 'Afficher les points de vente';
+  }
+}
+
+// Charger les points de vente
+async function loadSalesPoints() {
+  salesFeedback.textContent = '';
+
+  try {
+    const points = await fetchSalesPoints();
+    displaySalesPoints(points);
+    salesLoaded = true;
+  } catch (error) {
+    console.error(error);
+    salesFeedback.textContent = 'Impossible de charger les points de vente.';
+  }
+}
+
+// Afficher les points de vente
+function displaySalesPoints(points) {
+  salesContainer.innerHTML = points.map((point) => `
+    <article class="sales-point-card">
+      <h3>${point.building}</h3>
+      <p><strong>Salle :</strong> ${point.room}</p>
+      <p><strong>Horaires :</strong> ${point.openingHours}</p>
+      <p><strong>Email :</strong> ${point.email}</p>
+    </article>
+  `).join('');
+}

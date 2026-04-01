@@ -1,20 +1,20 @@
 [
   {
-    "building": "Bâtiment A",
-    "room": "A12",
-    "openingHours": "08:00 - 14:00",
-    "email": "snack.a@cpnv.ch"
+    "building": "Bâtiment Informatique",
+    "room": "C313",
+    "openingHours": "08:15 - 16h45",
+    "email": "classe.c313@cpnv.ch"
   },
   {
-    "building": "Bâtiment C",
-    "room": "C04",
-    "openingHours": "09:00 - 15:30",
-    "email": "snack.c@cpnv.ch"
+    "building": "Bâtiment Informatique",
+    "room": "Caféteria",
+    "openingHours": "12:00 - 13:30",
+    "email": "cafet@cpnv.ch"
   },
   {
-    "building": "Atelier Tech",
-    "room": "T02",
-    "openingHours": "07:30 - 13:00",
-    "email": "snack.tech@cpnv.ch"
+    "building": "Bâtiment Informatique",
+    "room": "A203",
+    "openingHours": "06:30 - 19:00",
+    "email": "media@cpnv.ch"
   }
 ]
